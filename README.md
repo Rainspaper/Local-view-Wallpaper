@@ -1,4 +1,4 @@
-# Wallpaper Player
+# Local view Wallpaper
 
 为了方便快速看**Wallpaper**下载的视频，你懂的。
 
