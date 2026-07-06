@@ -121,7 +121,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setWindowTitle("Wallpaper Player");
-    setWindowIcon(QIcon(":/ico1.ico"));
+    setWindowIcon(QIcon(":/ico.ico"));
     setMinimumSize(900, 600);
     resize(1280, 800);
 

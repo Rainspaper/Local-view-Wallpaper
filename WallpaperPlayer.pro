@@ -20,4 +20,4 @@ HEADERS += \
 
 RESOURCES += resources.qrc
 
-RC_ICONS = ico1.ico
+RC_ICONS = ico.ico
