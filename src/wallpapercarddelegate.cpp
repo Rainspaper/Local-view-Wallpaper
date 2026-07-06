@@ -36,11 +36,16 @@ GifDispatcher::GifDispatcher(QObject *parent)
             }
         }
 
-        bool foreground = (QApplication::activeWindow() != nullptr);
         bool hasDirty = !m_dirtyItems.isEmpty();
 
-        // flush dirty rects only when window is foreground
-        if (hasDirty && m_viewport && foreground) {
+        // flush dirty rects only when our window is visible (not minimized).
+        // Unlike QApplication::activeWindow(), this lets GIFs animate
+        // smoothly when the mouse hovers over our window even if it
+        // doesn't have keyboard focus — no stutter from desync'd repaints.
+        QWidget *top = m_viewport ? m_viewport->window() : nullptr;
+        bool visible = top && top->isVisible() && !top->isMinimized();
+
+        if (hasDirty && m_viewport && visible) {
             QRegion region;
             for (const auto &path : m_dirtyItems) {
                 auto rit = m_itemRects.find(path);
@@ -50,7 +55,7 @@ GifDispatcher::GifDispatcher(QObject *parent)
             m_dirtyItems.clear();
             if (!region.isEmpty())
                 m_viewport->update(region);
-        } else if (hasDirty && !foreground) {
+        } else if (hasDirty && !visible) {
             m_dirtyItems.clear();
         }
     });
